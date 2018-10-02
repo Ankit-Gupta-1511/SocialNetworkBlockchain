@@ -1,0 +1,70 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ * Write your model definitions here
+ */
+
+namespace social.network
+
+/*
+ * Two types of participants are available:
+ *  1) UserParticipant: End Users that will use the platform.
+ *  2) BusinessParticipant: For Business purposes: advertisers etc.  
+*/
+
+participant UserParticipant identified by userId{
+  o String userId
+  o String username
+  o String password
+  --> Profile profile
+  o DateTime timestamp optional
+}
+
+participant BusinessParticipant identified by businessId{
+  o String businessId
+  o DateTime timestamp optional
+  --> UserParticipant owner
+  --> UserParticipant [] followers optional
+}
+
+/*
+ * We have user data as the asset denoted by Profile 
+*/
+
+asset Profile identified by assetId{
+   o String assetId
+   o String name
+   o String email
+   o String phone
+   --> UserParticipant user
+   --> BusinessParticipant [] subscribedTo
+   --> UserParticipant [] friends
+}
+
+/*
+ * Transactions: 
+ * 1) follow
+ * 2) makeFriend
+*/
+
+transaction follow {
+  --> Profile profile
+  --> BusinessParticipant businessUser
+}
+
+transaction makeFriend {
+  --> UserParticipant user1
+  --> UserParticipant user2
+}
