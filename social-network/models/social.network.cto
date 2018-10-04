@@ -18,53 +18,28 @@
 
 namespace social.network
 
-/*
- * Two types of participants are available:
- *  1) UserParticipant: End Users that will use the platform.
- *  2) BusinessParticipant: For Business purposes: advertisers etc.  
-*/
-
-participant UserParticipant identified by userId{
-  o String userId
-  o String username
-  o String password
-  --> Profile profile
-  o DateTime timestamp optional
+participant User identified by id {
+  o String id
 }
 
-participant BusinessParticipant identified by businessId{
-  o String businessId
-  o DateTime timestamp optional
-  --> UserParticipant owner
-  --> UserParticipant [] followers optional
+participant BusinessUser identified by id{
+  o String id
+  --> User user
+  //--> User [] subscribers
 }
 
-/*
- * We have user data as the asset denoted by Profile 
-*/
-
-asset Profile identified by assetId{
-   o String assetId
-   o String name
-   o String email
-   o String phone
-   --> UserParticipant user
-   --> BusinessParticipant [] subscribedTo
-   --> UserParticipant [] friends
-}
-
-/*
- * Transactions: 
- * 1) follow
- * 2) makeFriend
-*/
-
-transaction follow {
-  --> Profile profile
-  --> BusinessParticipant businessUser
+asset Profile identified by id {
+  o String id
+  o String email
+  o String name
+  --> User owner
+  --> User [] friends optional
+  --> User [] followers optional
+  --> BusinessUser [] subscribedTo optional
 }
 
 transaction makeFriend {
-  --> UserParticipant user1
-  --> UserParticipant user2
+  --> Profile profile
+  --> User friend
 }
+
