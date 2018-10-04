@@ -12,34 +12,21 @@
  * limitations under the License.
  */
 
+'use strict';
 /**
- * Write your model definitions here
+ * Write your transction processor functions here
  */
 
-namespace social.network
+/**
+ * Sample transaction
+ * @param {org.example.socialnetwork.subscription} subscription - the profile the subscriber and the business to which the person will subscribe
+ * @transaction
+ */
+async function subscription(subscription) {
 
-participant User identified by id {
-  o String id
+    subscription.profile.subscribedTo = subscription.businessUser;
+
+    const assetRegistry = await getAssetRegistry('org.example.socialnetwork.Profile');
+    await assetRegistry.update(subscription.profile);
+
 }
-
-participant BusinessUser identified by id{
-  o String id
-  --> User user
-  //--> User [] subscribers
-}
-
-asset Profile identified by id {
-  o String id
-  o String email
-  o String name
-  --> User owner
-  --> User [] friends optional
-  --> User [] followers optional
-  --> BusinessUser [] subscribedTo optional
-}
-
-transaction makeFriend {
-  --> Profile profile
-  --> User friend
-}
-

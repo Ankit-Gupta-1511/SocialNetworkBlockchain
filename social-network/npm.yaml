@@ -1,0 +1,6 @@
+version: '0.0.4'
+services:
+npmregistry: ./node_modules
+container_name: npmregistry
+ports:
+- 4873:4873
