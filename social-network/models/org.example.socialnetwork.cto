@@ -33,12 +33,12 @@ asset Profile identified by profileId {
   --> User owner
   o String name
   o String email
-  --> BusinessUser [] subscribedTo
+  --> BusinessUser [] subscribedTo optional
 }
 
 transaction subscription {
   --> Profile profile
-  o BusinessUser businessUser
+  --> BusinessUser businessUser
 }
 
 event SampleEvent {

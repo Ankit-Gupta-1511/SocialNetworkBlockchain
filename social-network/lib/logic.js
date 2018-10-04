@@ -24,7 +24,7 @@
  */
 async function subscription(subscription) {
 
-    subscription.profile.subscribedTo = subscription.businessUser;
+    subscription.profile.subscribedTo.push(subscription.businessUser);
 
     const assetRegistry = await getAssetRegistry('org.example.socialnetwork.Profile');
     await assetRegistry.update(subscription.profile);
