@@ -24,9 +24,36 @@
  */
 async function subscription(subscription) {
 
-    subscription.profile.subscribedTo.push(subscription.businessUser);
+    console.log("subscription profile:\n");
+    console.log(subscription.profile);
+
+    if(subscription.profile.subscribedTo)
+        subscription.profile.subscribedTo.push(subscription.businessUser);
+    else
+        subscription.profile.subscribedTo = [subscription.businessUser];    
 
     const assetRegistry = await getAssetRegistry('org.example.socialnetwork.Profile');
     await assetRegistry.update(subscription.profile);
 
 }
+
+/**
+ * Sample transaction
+ * @param {org.example.socialnetwork.sharePost} share - the profile the subscriber and the business to which the person will subscribe
+ * @transaction
+ */
+async function subscription(share) {
+
+    console.log("subscription profile:\n");
+    console.log(share.post);
+
+    if(share.post.sharedTo)
+        share.post.sharedTo.push(share.user);
+    else
+        share.post.sharedTo = [share.user];    
+
+    const assetRegistry = await getAssetRegistry('org.example.socialnetwork.Post');
+    await assetRegistry.update(share.post);
+
+}
+

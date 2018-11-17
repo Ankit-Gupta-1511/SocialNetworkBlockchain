@@ -18,6 +18,7 @@
 
 namespace org.example.socialnetwork
 
+
 participant User identified by userId {
   o String userId
   
@@ -28,6 +29,18 @@ participant BusinessUser identified by businessId{
   --> User businessOwner
 }
 
+concept Comment {
+  o String comment
+  --> User user
+  o Comment thread
+}
+
+concept PostData {
+  o String text optional
+  o String image optional
+  o String [] comment optional
+}
+
 asset Profile identified by profileId {
   o String profileId
   --> User owner
@@ -36,13 +49,24 @@ asset Profile identified by profileId {
   --> BusinessUser [] subscribedTo optional
 }
 
+asset Post identified by postId {
+  o String postId
+  --> User owner
+  o PostData data
+  --> User [] sharedTo
+}
+
+asset BusinessPost identified by businessPostId {
+  o String businessPostId
+  --> BusinessUser owner
+}
+
 transaction subscription {
   --> Profile profile
   --> BusinessUser businessUser
 }
 
-event SampleEvent {
-  --> Profile asset
-  o String oldValue
-  o String newValue
+transaction sharePost{
+  --> Post post
+  --> User user
 }
