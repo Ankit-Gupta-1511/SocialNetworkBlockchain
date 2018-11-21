@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {withRouter} from 'react-router-dom';
+import cookie from 'react-cookies'
 
 import validateRegister from './../../helpers/registerValidations';
 
@@ -21,7 +22,22 @@ class Register extends Component {
         this.setState({[evt.target.name]: evt.target.value});
     };
 
+    componentDidMount() {
+        let str = cookie.load('access_token');
+        let accessToken = str.substring(
+            str.lastIndexOf(":") + 1, 
+            str.lastIndexOf(".")
+        );
+        if(accessToken) {
+            localStorage.setItem('githubAuthToken', accessToken);
+            console.log(`The githubAccessToken is : ${localStorage.getItem('githubAuthToken')}`);
+        }
+    }
+
     componentDidUpdate() {
+
+    
+
         if (this.props.registerData) {
             console.log(this.props.registerData);
             this.props.history.push('/login');

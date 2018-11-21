@@ -17,6 +17,7 @@ class Landing extends Component {
                                 <hr/>
                                 <Link to="/register" className="btn btn-lg btn-info mr-2">Sign Up</Link>
                                 <Link to="/login" className="btn btn-lg btn-light">Login</Link>
+                                <a href="http://localhost:3000/auth/github" className="btn btn-lg btn-light">Sign in with github</a>
                             </div>
                         </div>
                     </div>

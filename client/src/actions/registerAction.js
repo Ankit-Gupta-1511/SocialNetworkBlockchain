@@ -33,7 +33,7 @@ export const initRegister = (data) => {
     return dispatch => {
         axios.post(config.host + config.registerUser, userData).then(cardData => {
             window.localStorage.setItem('userId', cardData.userId);
-            axios.post(config.host + config.identityIssue, identityData).then(data => {
+            axios.post(config.host + config.identityIssue, identityData, {responseType: 'blob'}).then(data => {
                 console.log(data);
                 
                 window.localStorage.setItem('identity',data.data);

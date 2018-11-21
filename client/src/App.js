@@ -27,7 +27,7 @@ class App extends Component {
 
     componentDidMount() {
         console.log('auth token set');
-        setAuthToken(localStorage.getItem('authToken'));
+        setAuthToken(localStorage.getItem('githubAuthToken'), localStorage.getItem('authToken'));
         this.props.setCurrentUser();
     }
 
