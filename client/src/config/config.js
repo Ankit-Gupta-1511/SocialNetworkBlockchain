@@ -5,5 +5,9 @@ module.exports = {
     registerAsset: "/org.example.socialnetwork.Profile",
     identityIssue: "/system/identities/issue ",
     login: '/login',
-    registerPost: '/org.example.socialnetwork.Post'
+    registerPost: '/org.example.socialnetwork.Post',
+    getAllPosts: '/queries/getAllPosts',
+    getPostsByUserId: '/queries/getPostsByUserId',
+    getAllProfiles: '/org.example.socialnetwork.Profile',
+    getUserProfile: '/queries/getProfileByUserId'
 }

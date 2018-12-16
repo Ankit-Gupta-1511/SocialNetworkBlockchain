@@ -68,7 +68,7 @@ export default (state = {}, action) => {
             if (action.payload.profiles) {
                 return {
                     ...state,
-                    allProfiles: action.payload.profiles
+                    allProfiles: action.payload
                 };
             }
             return {

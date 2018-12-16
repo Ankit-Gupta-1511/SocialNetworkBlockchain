@@ -10,14 +10,13 @@ export const addPost = (data) => {
     var id = window.localStorage.getItem('userId');
     var requestData = {
         "$class": "org.example.socialnetwork.Post",
-        "postId": "Post-" + id,
-        "owner": "resource:org.example.socialnetwork.User#User-"+ id,
+        "postId": "Post-" + id + Math.random(),
+        "owner": "resource:org.example.socialnetwork.User#"+ id,
         "data": {
           "$class": "org.example.socialnetwork.PostData",
           "text": data.text,
           "image": "string",
-          "comment": [],
-          "id": "postData-" + id
+          "comment": []
         },
         "sharedTo": []
     }
@@ -33,8 +32,14 @@ export const addPost = (data) => {
 };
 
 export const getAllPosts = () => {
+    var id = window.localStorage.getItem('userId');
     return dispatch => {
-        axios.get('/api/posts').then(data => {
+        axios.get(config.host + config.getPostsByUserId, {
+            params: {
+                owner: "resource:org.example.socialnetwork.User#"+ id
+            }
+        }).then(data => {
+            console.log(data)
             dispatch({
                 type: ALL_POST,
                 payload: data.data

@@ -32,18 +32,42 @@ export const initRegister = (data) => {
       }
     return dispatch => {
         axios.post(config.host + config.registerUser, userData).then(cardData => {
-            window.localStorage.setItem('userId', cardData.userId);
-            axios.post(config.host + config.identityIssue, identityData, {responseType: 'blob'}).then(data => {
-                console.log(data);
-                
-                window.localStorage.setItem('identity',data.data);
+            window.localStorage.setItem('userId', cardData.data.userId);
+            axios.post(config.host + config.identityIssue, identityData, {responseType: 'blob'})
+                .then(identity => {
+                    console.log(identity);
+                    const file = new File([identity.data], localStorage.getItem('userId') + '.card', {type: 'application/octet-stream', lastModified: Date.now()});
+                    const formData = new FormData();
+                    formData.append('card', file);
+                    formData.append('name', window.localStorage.getItem('userId'));
+                    console.log(file);
+                    console.log(formData);
+
+                    const axiosInstance = axios.create();
+
+                    axiosInstance({
+                        method:'post',
+                        url:'http://localhost:3002/api/wallet/import',
+                        headers: {
+                            'Content-Type': 'multipart/form-data',
+                            'X-Access-Token': localStorage.getItem('githubAuthToken')
+                        },
+                        data: formData,
+                        withCredentials: true
+                    }).then(data => {
+                        dispatch({
+                            type: REGISTER,
+                            payload: {
+                                message: 'successful'
+                            }
+                        })
+                    })
+
+                // return axios.post('wallet/import', formData, {withCredentials: true});
             });
             
             axios.post(config.host + config.registerAsset, requestData).then(data => {
-                dispatch({
-                    type: REGISTER,
-                    payload: data.data
-                })
+                
             }); 
         });
         

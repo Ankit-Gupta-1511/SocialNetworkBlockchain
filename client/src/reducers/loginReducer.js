@@ -1,4 +1,4 @@
-import {LOGIN, LOGOUT, SET_CURRENT_USER, SET_ERRORS_LOGIN_NULL} from './../actions/loginAction';
+import {LOGIN, LOGOUT, SET_CURRENT_USER, SET_ERRORS_LOGIN_NULL, GITHUB_LOGIN} from './../actions/loginAction';
 import jwtDecoder from 'jwt-decode';
 
 import setAuthToken from './../utils/setAuthToken';
@@ -6,6 +6,22 @@ import setAuthToken from './../utils/setAuthToken';
 
 export default (state = {}, action) => {
     switch (action.type) {
+
+        case GITHUB_LOGIN: {
+            if(action.payload.message === 'successful'){
+                return {
+                    ...state,
+                    isLoginSuccessful: true,
+                    currentUser: action.payload.token
+                }
+            }
+
+            return {
+                ...state,
+                isLoginSuccessful: false
+            }
+        }
+
         case LOGIN:
             console.log(action.payload);
             if (action.payload.success === true) {

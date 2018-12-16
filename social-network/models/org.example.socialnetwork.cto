@@ -53,7 +53,7 @@ asset Post identified by postId {
   o String postId
   --> User owner
   o PostData data
-  --> User [] sharedTo
+  --> User [] sharedTo optional
 }
 
 asset BusinessPost identified by businessPostId {

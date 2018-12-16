@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+var config = require('../config/config')
+
 export const GET_PROFILE = "GET_PROFILE";
 export const CREATE_PROFILE = "CREATE_PROFILE";
 export const ADD_EXPERIENCE = "ADD_EXPERIENCE";
@@ -10,9 +12,11 @@ export const ALL_PROFILES = "ALL_PROFILES";
 
 export const getProfile = () => {
     return dispatch => {
-        axios.get('/api/profile/', {
-            headers: { Authorization: localStorage.getItem('authToken') }
-        }).then(data => {
+        axios.get(config.host + config.getUserProfile ,{
+            params: {
+                owner: "resource:org.example.socialnetwork.User#"+ window.localStorage.getItem('userId')
+            }
+        }) .then(data => {
             dispatch({
                 type: GET_PROFILE,
                 payload: data.data
@@ -78,7 +82,7 @@ export const deleteExperience = (id) => {
 
 export const getAllProfiles = () => {
     return dispatch => {
-        axios.get('/api/profile/all').then(data => {
+        axios.get(config.host + config.getAllProfiles).then(data => {
             dispatch({
                 type: ALL_PROFILES,
                 payload: data.data

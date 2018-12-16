@@ -1,0 +1,21 @@
+/** queries for social-network*/
+
+query getAllPosts{
+  description: "Select all posts"
+  statement:
+      SELECT org.example.socialnetwork.Post
+}
+
+query getPostsByUserId {
+  description: "Select all posts based on their owner"
+  statement:
+      SELECT org.example.socialnetwork.Post
+          WHERE (owner == _$owner)
+}
+
+query getProfileByUserId {
+  description: "Select the profile based on their owner"
+  statement:
+      SELECT org.example.socialnetwork.Profile
+          WHERE (owner == _$owner)
+}

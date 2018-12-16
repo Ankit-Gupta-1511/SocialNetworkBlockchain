@@ -5,7 +5,7 @@ import {bindActionCreators} from 'redux';
 import {withRouter} from 'react-router-dom';
 import validateLogin from './../../helpers/loginValidations';
 
-import {initLogin, setLoginErrorsToNull} from './../../actions/loginAction';
+import {initLogin, setLoginErrorsToNull, initLoginGithub} from './../../actions/loginAction';
 
 class Login extends Component {
 
@@ -20,6 +20,9 @@ class Login extends Component {
     };
 
     componentDidMount() {
+        if(localStorage.getItem('githubAuthToken')){
+            this.props.initLoginGithub(localStorage.getItem('githubAuthToken'));
+        }
         if (this.props.isLoginSuccessful === true) {
             this.props.history.push('/dashboard');
         }
@@ -93,6 +96,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
     initLogin,
+    initLoginGithub,
     setLoginErrorsToNull
 }, dispatch);
 

@@ -76,7 +76,7 @@ class AddExperience extends Component {
                             </div>
 
                             <div className="posts">
-                                {this.props.allPosts ? this.props.allPosts.map(post => <Post data={post}/>) : null}
+                                {this.props.allPosts ?  this.props.allPosts.map(post => <Post post={post}/>) : null}
 
                             </div>
                         </div>

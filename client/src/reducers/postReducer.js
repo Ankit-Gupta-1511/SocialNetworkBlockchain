@@ -6,7 +6,7 @@ export default (state = {}, action) => {
         case ALL_POST:
             return {
                 ...state,
-                allPosts: action.payload.posts
+                allPosts: action.payload
             };
         case ADD_POST:
             window.location.reload();
